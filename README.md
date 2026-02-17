@@ -1,7 +1,6 @@
 # TextWatermark
 
-A Swift package for text steganography — hide secret text inside visible text using invisible Unicode characters.
-
+A Swift package for text steganography -- hide secret text inside visible text using invisible Unicode characters.
 
 ## How it works
 
@@ -76,3 +75,7 @@ dependencies: [
     .package(url: "https://github.com/your-org/TextWatermark.git", from: "1.0.0")
 ]
 ```
+
+## License
+
+MIT
