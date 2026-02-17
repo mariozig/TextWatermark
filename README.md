@@ -76,6 +76,10 @@ dependencies: [
 ]
 ```
 
+## Acknowledgments
+
+Inspired by [text_watermark](https://github.com/jaceddd/text_watermark) by [@jaceddd](https://github.com/jaceddd), a JavaScript implementation of the same concept. This Swift port uses UTF-8 encoding and an invisible start marker instead of the original's UTF-16 approach and visible trailing period.
+
 ## License
 
 MIT
