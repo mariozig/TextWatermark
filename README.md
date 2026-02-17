@@ -72,7 +72,7 @@ print(TextWatermark.decode(from: dotMsg)!)  // "secret"
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/your-org/TextWatermark.git", from: "1.0.0")
+    .package(url: "https://github.com/mariozig/TextWatermark.git", from: "1.0.0")
 ]
 ```
 
