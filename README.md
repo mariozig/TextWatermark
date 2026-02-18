@@ -22,9 +22,10 @@ let watermarked = TextWatermark.encode(
 )
 // watermarked looks like "Nothing to see here" but contains invisible characters
 
-// Decode it back
-let secret = TextWatermark.decode(from: watermarked)
-// secret == "hidden message"
+// Decode it back (returns String?)
+if let secret = TextWatermark.decode(from: watermarked) {
+    print(secret) // "hidden message"
+}
 ```
 
 ### Optional suffix
@@ -80,9 +81,16 @@ print(TextWatermark.decode(from: dotMsg)!)  // "secret"
 
 ## Adding to your project
 
+Requires **Swift 6.2+**.
+
+Add the package dependency and the target dependency to your `Package.swift`:
+
 ```swift
 dependencies: [
     .package(url: "https://github.com/mariozig/TextWatermark.git", from: "1.0.0")
+],
+targets: [
+    .target(name: "YourTarget", dependencies: ["TextWatermark"])
 ]
 ```
 
