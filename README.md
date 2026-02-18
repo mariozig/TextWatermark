@@ -87,7 +87,7 @@ Add the package dependency and the target dependency to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/mariozig/TextWatermark.git", from: "1.0.0")
+    .package(url: "https://github.com/mariozig/TextWatermark.git", from: "1.0.2")
 ],
 targets: [
     .target(name: "YourTarget", dependencies: ["TextWatermark"])
