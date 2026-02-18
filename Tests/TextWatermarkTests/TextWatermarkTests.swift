@@ -131,3 +131,33 @@ import Testing
     let text = "Family: 👨‍👩‍👧‍👦 emoji"
     #expect(TextWatermark.decode(from: text) == nil)
 }
+
+// MARK: - Decode Defensive Edge Cases
+
+@Test func decodeMarkerWithNoNibblesReturnsNil() {
+    // Inject raw marker followed by only visible characters
+    let text = "Hello\u{2060}\u{2060}\u{2060}world"
+    #expect(TextWatermark.decode(from: text) == nil)
+}
+
+@Test func decodeDropsTrailingOddNibble() {
+    let encoded = TextWatermark.encode(visibleText: "Hi", secretText: "A")
+    // Append one extra invisible nibble character (e.g., nibble 0 = U+206C)
+    let tampered = encoded + "\u{206C}"
+    #expect(TextWatermark.decode(from: tampered) == "A")
+}
+
+@Test func decodeInvalidUTF8ReturnsNil() {
+    // Manually construct payload for bytes [0xFF, 0xFE] — invalid UTF-8
+    // 0xFF = nibbles F,F → U+206E, U+206E
+    // 0xFE = nibbles F,E → U+206E, U+2064
+    let crafted = "text\u{2060}\u{2060}\u{2060}\u{206E}\u{206E}\u{206E}\u{2064}"
+    #expect(TextWatermark.decode(from: crafted) == nil)
+}
+
+@Test func decodeUsesFirstMarker() {
+    let encoded = TextWatermark.encode(visibleText: "", secretText: "msg")
+    // Adding a second marker after doesn't break decoding of the first payload
+    let withExtraMarker = encoded + "\u{2060}\u{2060}\u{2060}"
+    #expect(TextWatermark.decode(from: withExtraMarker) == "msg")
+}

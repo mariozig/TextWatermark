@@ -85,41 +85,35 @@ public enum TextWatermark {
     }
 
     /// The invisible start-of-payload marker: three consecutive U+2060 (WORD JOINER).
-    public static var payloadMarker: String {
-        String(repeating: String(markerScalar), count: 3)
-    }
+    public static let payloadMarker = String(repeating: String(markerScalar), count: 3)
 
-    // MARK: - Internal
+    // MARK: - Private
 
     /// U+2060 WORD JOINER — used as the start-of-payload marker (×3).
-    static let markerScalar = Unicode.Scalar(0x2060)!
+    private static let markerScalar: Unicode.Scalar = "\u{2060}"
 
     /// Maps nibble values (0–15) to invisible Unicode scalars.
-    static let nibbleToInvisible: [Unicode.Scalar] = [
-        Unicode.Scalar(0x206C)!, // 0  INHIBIT ARABIC FORM SHAPING
-        Unicode.Scalar(0x00AD)!, // 1  SOFT HYPHEN
-        Unicode.Scalar(0x200E)!, // 2  LEFT-TO-RIGHT MARK
-        Unicode.Scalar(0x2068)!, // 3  FIRST STRONG ISOLATE
-        Unicode.Scalar(0x202C)!, // 4  POP DIRECTIONAL FORMATTING
-        Unicode.Scalar(0x2069)!, // 5  POP DIRECTIONAL ISOLATE
-        Unicode.Scalar(0x206A)!, // 6  INHIBIT SYMMETRIC SWAPPING
-        Unicode.Scalar(0x200B)!, // 7  ZERO-WIDTH SPACE
-        Unicode.Scalar(0x200C)!, // 8  ZERO-WIDTH NON-JOINER
-        Unicode.Scalar(0x200D)!, // 9  ZERO-WIDTH JOINER
-        Unicode.Scalar(0x206D)!, // a  ACTIVATE ARABIC FORM SHAPING
-        Unicode.Scalar(0x206F)!, // b  NOMINAL DIGIT SHAPES
-        Unicode.Scalar(0x2062)!, // c  INVISIBLE TIMES
-        Unicode.Scalar(0x2063)!, // d  INVISIBLE SEPARATOR
-        Unicode.Scalar(0x2064)!, // e  INVISIBLE PLUS
-        Unicode.Scalar(0x206E)!, // f  NATIONAL DIGIT SHAPES
+    private static let nibbleToInvisible: [Unicode.Scalar] = [
+        "\u{206C}", // 0  INHIBIT ARABIC FORM SHAPING
+        "\u{00AD}", // 1  SOFT HYPHEN
+        "\u{200E}", // 2  LEFT-TO-RIGHT MARK
+        "\u{2068}", // 3  FIRST STRONG ISOLATE
+        "\u{202C}", // 4  POP DIRECTIONAL FORMATTING
+        "\u{2069}", // 5  POP DIRECTIONAL ISOLATE
+        "\u{206A}", // 6  INHIBIT SYMMETRIC SWAPPING
+        "\u{200B}", // 7  ZERO-WIDTH SPACE
+        "\u{200C}", // 8  ZERO-WIDTH NON-JOINER
+        "\u{200D}", // 9  ZERO-WIDTH JOINER
+        "\u{206D}", // a  ACTIVATE ARABIC FORM SHAPING
+        "\u{206F}", // b  NOMINAL DIGIT SHAPES
+        "\u{2062}", // c  INVISIBLE TIMES
+        "\u{2063}", // d  INVISIBLE SEPARATOR
+        "\u{2064}", // e  INVISIBLE PLUS
+        "\u{206E}", // f  NATIONAL DIGIT SHAPES
     ]
 
     /// Reverse lookup: invisible scalar → nibble value.
-    static let invisibleToNibble: [Unicode.Scalar: UInt8] = {
-        var dict: [Unicode.Scalar: UInt8] = [:]
-        for (index, scalar) in nibbleToInvisible.enumerated() {
-            dict[scalar] = UInt8(index)
-        }
-        return dict
-    }()
+    static let invisibleToNibble: [Unicode.Scalar: UInt8] = Dictionary(
+        uniqueKeysWithValues: nibbleToInvisible.enumerated().map { ($1, UInt8($0)) }
+    )
 }
