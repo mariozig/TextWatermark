@@ -41,6 +41,16 @@ let withDot = TextWatermark.encode(
 // Decoding works the same regardless of suffix
 ```
 
+### Payload marker
+
+The invisible start-of-payload marker is available as a constant for advanced use cases like
+scanning or stripping watermarks:
+
+```swift
+let marker = TextWatermark.payloadMarker
+// Three consecutive U+2060 (WORD JOINER) characters
+```
+
 ## Try it out quick!
 
 From the project directory, open a REPL with the library loaded:

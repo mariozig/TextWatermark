@@ -20,9 +20,7 @@ public enum TextWatermark {
         var result = visibleText
 
         // Start-of-payload marker: three consecutive U+2060
-        result.unicodeScalars.append(markerScalar)
-        result.unicodeScalars.append(markerScalar)
-        result.unicodeScalars.append(markerScalar)
+        result += payloadMarker
 
         // Encode each UTF-8 byte as two invisible characters (high nibble, low nibble)
         for byte in secretText.utf8 {
@@ -84,6 +82,11 @@ public enum TextWatermark {
         let decoded = String(decoding: bytes, as: UTF8.self)
         guard decoded.utf8.elementsEqual(bytes) else { return nil }
         return decoded
+    }
+
+    /// The invisible start-of-payload marker: three consecutive U+2060 (WORD JOINER).
+    public static var payloadMarker: String {
+        String(repeating: String(markerScalar), count: 3)
     }
 
     // MARK: - Internal

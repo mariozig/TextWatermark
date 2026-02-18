@@ -110,7 +110,7 @@ import Testing
     let afterVisible = String(encoded.dropFirst(visible.count))
     for scalar in afterVisible.unicodeScalars {
         // All scalars should be either the marker (U+2060) or one of the 16 payload chars
-        let isMarker = scalar == TextWatermark.markerScalar
+        let isMarker = TextWatermark.payloadMarker.unicodeScalars.contains(scalar)
         let isPayload = TextWatermark.invisibleToNibble[scalar] != nil
         #expect(isMarker || isPayload, "Unexpected visible scalar: U+\(String(scalar.value, radix: 16, uppercase: true))")
     }
